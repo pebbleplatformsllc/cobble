@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* (Then your custom CSS) */
 :root {
   --background: #ffffff;
   --foreground: #171717;
