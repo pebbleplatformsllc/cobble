@@ -1,11 +1,11 @@
 import { Suspense } from "react";
-import SearchContainer from "@/components/SearchContainer";
+import SettingsClient from "./settings-client";
 import Loading from "./loading";
 
-export default function Home() {
+export default function Settings() {
   return (
     <Suspense fallback={<Loading />}>
-      <SearchContainer />
+      <SettingsClient />
     </Suspense>
   );
 }
