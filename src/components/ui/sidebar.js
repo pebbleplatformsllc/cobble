@@ -33,6 +33,14 @@ import {
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon, current: true },
   { 
+    name: "Pricing", 
+    href: "/pricing", 
+    icon: IconCrown, 
+    current: false,
+    mobileOnly: true,
+    description: "View pricing plans and features"
+  },
+  { 
     name: "People & Society", 
     href: "/people-society", 
     icon: UserGroupIcon, 
@@ -138,6 +146,7 @@ export default function Sidebar({ children }) {
                     <ul role="list" className="-mx-2 space-y-1">
                       {navigation.filter(item => {
                         if (item.name === "AI Assisted Results" && !showAiButton) return false;
+                        if (item.mobileOnly && window.innerWidth >= 1024) return false;
                         return true;
                       }).map((item) => (
                         <li key={item.name}>
@@ -173,6 +182,28 @@ export default function Sidebar({ children }) {
                     </ul>
                   </li>
                   <li className="mt-auto">
+                    <button
+                      type="button"
+                      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                      className="group -mx-2 flex gap-x-3 p-2 text-sm font-semibold text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 w-full"
+                    >
+                      <span className="h-6 w-6 shrink-0">
+                        {theme === "dark" ? (
+                          <SunIcon
+                            aria-hidden="true"
+                            className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-300"
+                          />
+                        ) : (
+                          <MoonIcon
+                            aria-hidden="true"
+                            className="h-6 w-6 text-gray-400 dark:text-gray-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-300"
+                          />
+                        )}
+                      </span>
+                      <span>
+                        {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                      </span>
+                    </button>
                     <a
                       href="/settings"
                       onClick={(e) => handleNavigation("/settings", e)}
@@ -216,6 +247,7 @@ export default function Sidebar({ children }) {
                 <ul role="list" className="-mx-2 space-y-1">
                   {navigation.filter(item => {
                     if (item.name === "AI Assisted Results" && !showAiButton) return false;
+                    if (item.mobileOnly) return false;
                     return true;
                   }).map((item) => (
                     <li key={item.name}>
@@ -351,7 +383,7 @@ export default function Sidebar({ children }) {
               </form>
               <div className="flex items-center gap-x-2 sm:gap-x-4">
                 {isAuthenticated && subscriptionLevel === "pro" && (
-                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600/20 dark:border-indigo-400/20 rounded-lg bg-indigo-50/50 dark:bg-indigo-950/50">
+                  <div className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600/20 dark:border-indigo-400/20 rounded-lg bg-indigo-50/50 dark:bg-indigo-950/50">
                     <IconCrown size={16} className="text-indigo-600 dark:text-indigo-400" />
                     <span>Pro</span>
                   </div>
@@ -371,14 +403,14 @@ export default function Sidebar({ children }) {
                     {/* Sign In Button */}
                     <button
                       onClick={() => router.push("/signin")}
-                      className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 whitespace-nowrap">
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-300 whitespace-nowrap">
                       Sign In
                     </button>
 
                     {/* Sign Up Button */}
                     <button
                       onClick={() => router.push("/signup")}
-                      className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors whitespace-nowrap">
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors whitespace-nowrap">
                       Sign Up
                     </button>
                   </>
@@ -386,7 +418,7 @@ export default function Sidebar({ children }) {
                   /* Sign Out Button */
                   <button
                     onClick={() => setIsAuthenticated(false)}
-                    className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors whitespace-nowrap">
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border border-indigo-600 dark:border-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950 rounded-lg transition-colors whitespace-nowrap">
                     Sign Out
                   </button>
                 )}
@@ -395,7 +427,7 @@ export default function Sidebar({ children }) {
                 <button
                   type="button"
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                  className="ml-2 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400"
+                  className="ml-2 p-2 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 hidden"
                 >
                   <span className="sr-only">
                     {theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
